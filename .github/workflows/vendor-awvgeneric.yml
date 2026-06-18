@@ -24,12 +24,18 @@ jobs:
           rm -rf vendor/AWVGeneric
           mkdir -p vendor
           cp -r upstream vendor/AWVGeneric
-          rm -rf vendor/AWVGeneric/.git   # <<< BELANGRIJK
+          rm -rf vendor/AWVGeneric/.git
 
       - name: Commit changes if any
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add vendor/AWVGeneric
-          git diff --quiet && echo "No changes" || git commit -m "Vendor update: AWVGeneric"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          else
+            git commit -m "Vendor update: AWVGeneric"
+            git push
+          fi
