@@ -5,6 +5,9 @@ on:
     - cron: "0 3 * * *"   # elke nacht om 03:00
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   vendor-awvgeneric:
     runs-on: ubuntu-latest
