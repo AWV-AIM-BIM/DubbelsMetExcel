@@ -24,6 +24,7 @@ jobs:
           rm -rf vendor/AWVGeneric
           mkdir -p vendor
           cp -r upstream vendor/AWVGeneric
+          rm -rf vendor/AWVGeneric/.git   # <<< BELANGRIJK
 
       - name: Commit changes if any
         run: |
