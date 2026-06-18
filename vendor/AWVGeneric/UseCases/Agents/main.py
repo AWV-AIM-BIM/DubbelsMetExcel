@@ -1,0 +1,31 @@
+from datetime import datetime
+
+import pandas as pd
+
+from API.eminfra.EMInfraClient import EMInfraClient
+from API.Enums import AuthType, Environment
+from UseCases.utils import load_settings_path
+
+if __name__ == '__main__':
+    environment = Environment.PRD
+    print(f'environment:\t\t{environment}')
+    settings_path = load_settings_path()
+    eminfra_client = EMInfraClient(env=environment, auth_type=AuthType.JWT, settings_path=settings_path)
+
+    generator_agents = eminfra_client.agent_service.search_agent(naam='John Cleese')
+    agents = list(generator_agents) # convert generator to a list
+    print(f"Found a total of:\t{len(agents)} agents_service.")
+
+    # Convert the list to a dictionary
+    agents_dict = {
+        "uuid": [agent.uuid for agent in agents]
+        , "naam": [agent.naam for agent in agents]
+        , "ovoCode": [agent.ovoCode for agent in agents]
+        , "voId": [agent.voId for agent in agents]
+    }
+
+    # Convert the dictionary to a pandas df
+    df_agents = pd.DataFrame(data= agents_dict)
+    df_agents_sorted = df_agents.sort_values(by="naam", ascending=True)
+    # Convert pandas df to an Excel
+    df_agents_sorted.to_excel(f'agents_{environment.name}_{datetime.now().date()}.xlsx', sheet_name='Agents', index=False, freeze_panes=[1,0])
