@@ -1,7 +1,6 @@
 from collections.abc import Generator
 from typing import Optional
 
-from pyarrow import null
 
 from API.eminfra.EMInfraDomain import (AssetDTO, ToezichterKenmerk, IdentiteitKenmerk, ToezichtgroepDTO, QueryDTO,
                                        SelectionDTO, PagingModeEnum, ExpressionDTO, TermDTO, OperatorEnum,
@@ -177,7 +176,7 @@ class ToezichterService:
             if bron not in ('PNO', 'EXTERN'):
                 raise ValueError(f' Parameter "bron" should be one of these values: ("PNO", "EXTERN"), not {bron}.')
             expression_term_type = ExpressionDTO(
-                                             terms=[TermDTO(property='type', operator=OperatorEnum.EQ, value=actief,
+                                             terms=[TermDTO(property='type', operator=OperatorEnum.EQ, value=bron,
                                                             logicalOp=None)],
                                              logicalOp=LogicalOpEnum.AND
                                          )
