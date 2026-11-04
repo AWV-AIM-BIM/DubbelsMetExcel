@@ -4,23 +4,18 @@ from typing import Any
 import pandas as pd
 from pathlib import Path
 
-from API.eminfra.EMInfraClient import EMInfraClient
-from API.eminfra.EMInfraDomain import (AssetDTO, QueryDTO, PagingModeEnum, SelectionDTO, ExpressionDTO, TermDTO,
+from API.clients.eminfra.EMInfraClient import EMInfraClient
+from API.clients.eminfra.EMInfraDomain import (AssetDTO, QueryDTO, PagingModeEnum, SelectionDTO, ExpressionDTO, TermDTO,
                                        OperatorEnum, AgentDTO, LogicalOpEnum, ExpansionsDTO, RelatieEnum,
                                        AssetRelatieDTO, DocumentDTO, DocumentCategorieEnum)
-from API.eminfra.Generic import get_kenmerktype_and_relatietype_id
+from API.clients.eminfra.Generic import get_kenmerktype_and_relatietype_id
 from collections.abc import Generator
 
 
 
 
 def load_settings_path(user: str = 'Dries') -> Path:
-    if user == 'Dries':
-        return Path('C:/resources/settings_SyncOTLDataToLegacy.json')
-    elif user == 'David':
-        return Path('/home/davidlinux/Documenten/AWV/resources/settings_SyncToArangoDB.json')
-    else:
-        raise NotImplementedError(f'user: {user} is not implemented in function call load_settings()')
+    raise NotImplementedError('move settings files to a config dir on the same level as the projects.')
 
 
 def configure_logger(log_path: str = "logs.log"):
